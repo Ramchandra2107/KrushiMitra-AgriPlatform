@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { REGIONAL_WEATHER_PRESETS } from '../data/agriData';
-import { CloudSun, Sun, CloudRain, Wind, Droplets, Umbrella, ShieldAlert, Sparkles, MapPin, Search, Thermometer, Calendar } from 'lucide-react';
+import { CloudSun, Sun, CloudRain, Wind, Droplets, Umbrella, ShieldAlert, MapPin, Search, Calendar } from 'lucide-react';
 
-export default function WeatherForecast({ lang }) {
+export default function WeatherForecast() {
   const [selectedRegion, setSelectedRegion] = useState(REGIONAL_WEATHER_PRESETS[0]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -13,7 +13,6 @@ export default function WeatherForecast({ lang }) {
     if (match) {
       setSelectedRegion(match);
     } else {
-      // Create dynamic mock for custom searched city
       setSelectedRegion({
         name: searchQuery + ", India",
         state: "India",
@@ -45,32 +44,30 @@ export default function WeatherForecast({ lang }) {
   const getWeatherIcon = (iconName) => {
     switch(iconName) {
       case 'sun': return <Sun size={28} style={{ color: '#fbbf24' }} />;
-      case 'cloud-rain': return <CloudRain size={28} style={{ color: '#60a5fa' }} />;
-      default: return <CloudSun size={28} style={{ color: '#34d399' }} />;
+      case 'cloud-rain': return <CloudRain size={28} style={{ color: '#34d399' }} />;
+      default: return <CloudSun size={28} style={{ color: '#4ade80' }} />;
     }
   };
 
   return (
-    <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '32px 24px' }}>
+    <div style={{ maxWidth: '100%', margin: '0 auto', padding: '24px 0' }}>
       
       {/* Header */}
-      <div style={{ marginBottom: '32px' }}>
+      <div style={{ marginBottom: '28px' }}>
         <div className="badge badge-info" style={{ marginBottom: '10px' }}>
           <CloudSun size={14} />
-          <span>{lang === 'hi' ? 'माइक्रो-क्लाइमेट एआई' : 'Agri-Weather & Micro-Climate Intelligence'}</span>
+          <span>Agri-Weather & Micro-Climate Intelligence</span>
         </div>
         <h2 style={{ fontSize: '2rem', marginBottom: '8px' }}>
-          {lang === 'hi' ? 'मौसम पूर्वानुमान व कृषि सलाह' : 'Weather Forecast & Farming Advisory'}
+          Weather Forecast & Farming Advisory
         </h2>
         <p style={{ color: 'var(--text-muted)', fontSize: '1rem' }}>
-          {lang === 'hi'
-            ? 'सटीक 7-दिवसीय मौसम रिपोर्ट और सिंचाई, छिड़काव एवं फसल सुरक्षा की दैनिक सलाह।'
-            : 'Hyper-local weather metrics with customized agronomic advisories for smart farm operations.'}
+          Hyper-local weather metrics with customized agronomic advisories for smart farm operations.
         </p>
       </div>
 
       {/* Region Selector Bar */}
-      <div className="glass-card" style={{ padding: '20px', marginBottom: '32px', borderRadius: '16px' }}>
+      <div className="glass-card" style={{ padding: '20px', marginBottom: '28px', borderRadius: '16px' }}>
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}>
           
           {/* Preset Buttons */}
@@ -85,9 +82,9 @@ export default function WeatherForecast({ lang }) {
                   fontSize: '0.85rem',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  border: selectedRegion.name === preset.name ? '1px solid var(--accent-neon)' : '1px solid var(--border-color)',
-                  background: selectedRegion.name === preset.name ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255,255,255,0.04)',
-                  color: selectedRegion.name === preset.name ? '#34d399' : 'var(--text-muted)',
+                  border: selectedRegion.name === preset.name ? '1px solid #0b8f4d' : '1px solid var(--border-color)',
+                  background: selectedRegion.name === preset.name ? 'rgba(59, 190, 57, 0.16)' : '#ffffff',
+                  color: selectedRegion.name === preset.name ? '#075b38' : 'var(--text-muted)',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px'
@@ -113,7 +110,7 @@ export default function WeatherForecast({ lang }) {
                   padding: '8px 12px 8px 36px',
                   borderRadius: '8px',
                   border: '1px solid var(--border-color)',
-                  background: 'rgba(0,0,0,0.3)',
+                  background: '#ffffff',
                   color: 'var(--text-main)',
                   fontSize: '0.85rem',
                   outline: 'none'
@@ -128,7 +125,7 @@ export default function WeatherForecast({ lang }) {
       </div>
 
       {/* Main Weather Overview Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '28px', marginBottom: '36px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '32px' }}>
         
         {/* Left: Main Temperature & Conditions Card */}
         <div 
@@ -136,21 +133,21 @@ export default function WeatherForecast({ lang }) {
           style={{ 
             padding: '32px', 
             borderRadius: '24px',
-            background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(15, 27, 20, 0.8) 100%)',
-            border: '1px solid rgba(59, 130, 246, 0.3)',
+            background: 'linear-gradient(135deg, #075b38 0%, #0b8f4d 100%)',
+            border: '1px solid rgba(59, 190, 57, 0.42)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between'
           }}
         >
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#60a5fa', fontWeight: 600, fontSize: '0.9rem', marginBottom: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#9de59b', fontWeight: 600, fontSize: '0.9rem', marginBottom: '12px' }}>
               <MapPin size={18} />
               <span>{selectedRegion.name}</span>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '16px', marginBottom: '12px' }}>
-              <h1 style={{ fontSize: '4rem', fontWeight: 800, lineHeight: 1 }}>{selectedRegion.temp}°C</h1>
+              <h1 style={{ fontSize: '4rem', fontWeight: 800, lineHeight: 1, color: '#ffffff' }}>{selectedRegion.temp}°C</h1>
               <span style={{ fontSize: '1.2rem', color: 'var(--text-muted)' }}>{selectedRegion.condition}</span>
             </div>
 
@@ -162,25 +159,25 @@ export default function WeatherForecast({ lang }) {
           {/* Quick Metrics Chips */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '24px', paddingTop: '20px', borderTop: '1px solid var(--border-color)' }}>
             <div style={{ textAlign: 'center' }}>
-              <Droplets size={18} style={{ color: '#60a5fa', marginBottom: '4px' }} />
+              <Droplets size={18} style={{ color: '#9de59b', marginBottom: '4px' }} />
               <div style={{ fontSize: '0.95rem', fontWeight: 700 }}>{selectedRegion.humidity}%</div>
               <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Humidity</div>
             </div>
 
             <div style={{ textAlign: 'center' }}>
-              <Wind size={18} style={{ color: '#34d399', marginBottom: '4px' }} />
+              <Wind size={18} style={{ color: '#3bbe39', marginBottom: '4px' }} />
               <div style={{ fontSize: '0.95rem', fontWeight: 700 }}>{selectedRegion.windSpeed} km/h</div>
               <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Wind</div>
             </div>
 
             <div style={{ textAlign: 'center' }}>
-              <Umbrella size={18} style={{ color: '#fbbf24', marginBottom: '4px' }} />
+              <Umbrella size={18} style={{ color: '#b9e8c0', marginBottom: '4px' }} />
               <div style={{ fontSize: '0.95rem', fontWeight: 700 }}>{selectedRegion.rainProb}%</div>
               <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Rain</div>
             </div>
 
             <div style={{ textAlign: 'center' }}>
-              <Sun size={18} style={{ color: '#f87171', marginBottom: '4px' }} />
+              <Sun size={18} style={{ color: '#fbbf24', marginBottom: '4px' }} />
               <div style={{ fontSize: '0.95rem', fontWeight: 700 }}>UV {selectedRegion.uvIndex}</div>
               <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>UV Index</div>
             </div>
@@ -190,17 +187,17 @@ export default function WeatherForecast({ lang }) {
         {/* Right: Agricultural Advisory Panel */}
         <div className="glass-card" style={{ padding: '32px', borderRadius: '24px', border: '1px solid var(--border-highlight)' }}>
           <h3 style={{ fontSize: '1.25rem', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <ShieldAlert size={22} style={{ color: '#fbbf24' }} />
-            <span>{lang === 'hi' ? 'दैनिक कृषि सलाह (Farm Advisories)' : 'Daily Agricultural Advisories'}</span>
+            <ShieldAlert size={22} style={{ color: '#4ade80' }} />
+            <span>Daily Agricultural Advisories</span>
           </h3>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             
             {/* Advisory 1: Irrigation */}
-            <div style={{ background: 'rgba(59, 130, 246, 0.12)', border: '1px solid rgba(59, 130, 246, 0.25)', padding: '14px 18px', borderRadius: '14px' }}>
-              <h4 style={{ fontSize: '0.9rem', color: '#60a5fa', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.25)', padding: '14px 18px', borderRadius: '14px' }}>
+              <h4 style={{ fontSize: '0.9rem', color: '#34d399', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <Droplets size={16} />
-                <span>{lang === 'hi' ? 'सिंचाई सलाह (Irrigation)' : 'Irrigation Advisory:'}</span>
+                <span>Irrigation Advisory:</span>
               </h4>
               <p style={{ fontSize: '0.88rem', color: 'var(--text-main)', lineHeight: 1.5 }}>
                 {selectedRegion.advisory.irrigation}
@@ -208,10 +205,10 @@ export default function WeatherForecast({ lang }) {
             </div>
 
             {/* Advisory 2: Spraying */}
-            <div style={{ background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.25)', padding: '14px 18px', borderRadius: '14px' }}>
-              <h4 style={{ fontSize: '0.9rem', color: '#34d399', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ background: 'rgba(74, 222, 128, 0.12)', border: '1px solid rgba(74, 222, 128, 0.25)', padding: '14px 18px', borderRadius: '14px' }}>
+              <h4 style={{ fontSize: '0.9rem', color: '#4ade80', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <Wind size={16} />
-                <span>{lang === 'hi' ? 'कीटनाशक छिड़काव (Spraying Window)' : 'Pesticide Spraying Window:'}</span>
+                <span>Pesticide Spraying Window:</span>
               </h4>
               <p style={{ fontSize: '0.88rem', color: 'var(--text-main)', lineHeight: 1.5 }}>
                 {selectedRegion.advisory.spraying}
@@ -219,10 +216,10 @@ export default function WeatherForecast({ lang }) {
             </div>
 
             {/* Advisory 3: Harvesting */}
-            <div style={{ background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.25)', padding: '14px 18px', borderRadius: '14px' }}>
-              <h4 style={{ fontSize: '0.9rem', color: '#fbbf24', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ background: 'rgba(52, 211, 153, 0.12)', border: '1px solid rgba(52, 211, 153, 0.25)', padding: '14px 18px', borderRadius: '14px' }}>
+              <h4 style={{ fontSize: '0.9rem', color: '#34d399', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <Calendar size={16} />
-                <span>{lang === 'hi' ? 'कटाई सुरक्षा (Harvest Safety)' : 'Harvest & Post-Harvest:'}</span>
+                <span>Harvest & Post-Harvest:</span>
               </h4>
               <p style={{ fontSize: '0.88rem', color: 'var(--text-main)', lineHeight: 1.5 }}>
                 {selectedRegion.advisory.harvesting}
@@ -237,7 +234,7 @@ export default function WeatherForecast({ lang }) {
       <div>
         <h3 style={{ fontSize: '1.2rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Calendar size={18} className="text-gradient" />
-          <span>{lang === 'hi' ? '7-दिवसीय मौसम पूर्वानुमान' : '7-Day Extended Weather Forecast'}</span>
+          <span>7-Day Extended Weather Forecast</span>
         </h3>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '14px' }}>
@@ -250,7 +247,7 @@ export default function WeatherForecast({ lang }) {
                 textAlign: 'center',
                 borderRadius: '16px',
                 border: idx === 0 ? '1px solid var(--accent-neon)' : '1px solid var(--border-color)',
-                background: idx === 0 ? 'rgba(16, 185, 129, 0.1)' : 'var(--bg-card)'
+                background: idx === 0 ? 'rgba(16, 185, 129, 0.15)' : 'var(--bg-card)'
               }}
             >
               <div style={{ fontSize: '0.88rem', fontWeight: 700, marginBottom: '10px', color: idx === 0 ? '#34d399' : 'var(--text-main)' }}>
@@ -269,7 +266,7 @@ export default function WeatherForecast({ lang }) {
                 {fc.tempMax}° <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)', fontWeight: 500 }}>{fc.tempMin}°</span>
               </div>
 
-              <div style={{ fontSize: '0.72rem', color: '#60a5fa', marginTop: '6px', fontWeight: 600 }}>
+              <div style={{ fontSize: '0.72rem', color: '#34d399', marginTop: '6px', fontWeight: 600 }}>
                 ☔ {fc.rainProb}%
               </div>
             </div>

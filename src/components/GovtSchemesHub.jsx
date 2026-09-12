@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { GOVT_SCHEMES } from '../data/agriData';
-import { Search, Filter, ShieldCheck, ExternalLink, Calculator, CheckCircle2, FileText, ChevronRight, X, Sparkles, DollarSign, UserCheck } from 'lucide-react';
+import { Search, ShieldCheck, ExternalLink, Calculator, CheckCircle2, FileText, ChevronRight, X, Sparkles, UserCheck } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-export default function GovtSchemesHub({ lang }) {
+export default function GovtSchemesHub() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [activeModalScheme, setActiveModalScheme] = useState(null);
@@ -21,7 +21,6 @@ export default function GovtSchemesHub({ lang }) {
   // Filter schemes
   const filteredSchemes = GOVT_SCHEMES.filter(scheme => {
     const matchesSearch = scheme.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          scheme.titleHindi.includes(searchTerm) ||
                           scheme.benefitDesc.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || scheme.category === selectedCategory;
     return matchesSearch && matchesCategory;
@@ -34,7 +33,7 @@ export default function GovtSchemesHub({ lang }) {
     let matchedCount = 1;
 
     if (farmerCategory === 'small') {
-      baseAmount += 25000; // SMAM machinery subsidy estimate + PMKSY micro-irrigation
+      baseAmount += 25000;
       matchedCount += 3;
     } else {
       baseAmount += 45000;
@@ -42,7 +41,7 @@ export default function GovtSchemesHub({ lang }) {
     }
 
     if (cropType === 'paddy' || cropType === 'cotton') {
-      baseAmount += Math.round(size * 12000); // Fasal bima estimate
+      baseAmount += Math.round(size * 12000);
     }
 
     setCalculatedBenefit({
@@ -63,22 +62,20 @@ export default function GovtSchemesHub({ lang }) {
   };
 
   return (
-    <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '32px 24px' }}>
+    <div style={{ maxWidth: '100%', margin: '0 auto', padding: '24px 0' }}>
       
       {/* Page Title & Hero */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px', marginBottom: '32px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px', marginBottom: '28px' }}>
         <div>
           <div className="badge badge-warning" style={{ marginBottom: '10px' }}>
             <ShieldCheck size={14} />
-            <span>{lang === 'hi' ? 'सरकारी योजनाएं एवं वित्तीय सहायता' : 'Government Welfare & Subsidies'}</span>
+            <span>Government Welfare & Subsidies</span>
           </div>
           <h2 style={{ fontSize: '2rem', marginBottom: '8px' }}>
-            {lang === 'hi' ? 'कृषि योजनाएं एवं पात्रता केंद्र' : 'Agri-Govt Schemes Portal'}
+            Agri-Govt Schemes Portal
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '1rem' }}>
-            {lang === 'hi'
-              ? 'केंद्र एवं राज्य सरकार की कृषि योजनाओं की खोज करें, पात्रता जांचें और सीधे आवेदन करें।'
-              : 'Explore Central and State agricultural subsidy programs, insurance covers, and financial credit grants.'}
+            Explore Central and State agricultural subsidy programs, insurance covers, and financial credit grants.
           </p>
         </div>
 
@@ -87,15 +84,15 @@ export default function GovtSchemesHub({ lang }) {
           onClick={() => setShowCalculator(true)}
           className="btn-primary"
           style={{
-            background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+            background: 'linear-gradient(135deg, #075b38 0%, #0b8f4d 100%)',
             padding: '12px 22px',
             borderRadius: '12px',
             fontSize: '0.95rem',
-            boxShadow: '0 4px 16px rgba(245, 158, 11, 0.35)'
+            boxShadow: '0 4px 16px rgba(11, 143, 77, 0.35)'
           }}
         >
           <Calculator size={18} />
-          <span>{lang === 'hi' ? 'योजना पात्रता कैलकुलेटर' : 'Scheme Eligibility Calculator'}</span>
+          <span>Scheme Eligibility Calculator</span>
         </button>
       </div>
 
@@ -108,7 +105,7 @@ export default function GovtSchemesHub({ lang }) {
             <Search size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
             <input
               type="text"
-              placeholder={lang === 'hi' ? 'योजना का नाम या कीवर्ड खोजें (जैसे PM-KISAN, बीमा)...' : 'Search scheme by name or key benefit...'}
+              placeholder="Search scheme by name or benefit..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{
@@ -116,7 +113,7 @@ export default function GovtSchemesHub({ lang }) {
                 padding: '10px 14px 10px 42px',
                 borderRadius: '10px',
                 border: '1px solid var(--border-color)',
-                background: 'rgba(0,0,0,0.25)',
+                background: '#ffffff',
                 color: 'var(--text-main)',
                 fontSize: '0.92rem',
                 outline: 'none'
@@ -137,9 +134,9 @@ export default function GovtSchemesHub({ lang }) {
                   fontWeight: 600,
                   whiteSpace: 'nowrap',
                   cursor: 'pointer',
-                  border: selectedCategory === cat ? '1px solid var(--accent-neon)' : '1px solid var(--border-color)',
-                  background: selectedCategory === cat ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255,255,255,0.04)',
-                  color: selectedCategory === cat ? '#34d399' : 'var(--text-muted)'
+                  border: selectedCategory === cat ? '1px solid #0b8f4d' : '1px solid var(--border-color)',
+                  background: selectedCategory === cat ? 'rgba(59, 190, 57, 0.16)' : '#ffffff',
+                  color: selectedCategory === cat ? '#075b38' : 'var(--text-muted)'
                 }}
               >
                 {cat}
@@ -150,7 +147,7 @@ export default function GovtSchemesHub({ lang }) {
       </div>
 
       {/* Schemes Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
         {filteredSchemes.map((scheme) => (
           <div 
             key={scheme.id}
@@ -168,7 +165,7 @@ export default function GovtSchemesHub({ lang }) {
               {/* Category Badge & Benefit Chip */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span className="badge badge-warning">
-                  {lang === 'hi' ? scheme.categoryHindi : scheme.category}
+                  {scheme.category}
                 </span>
                 <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#34d399' }}>
                   {scheme.benefitAmount}
@@ -176,7 +173,7 @@ export default function GovtSchemesHub({ lang }) {
               </div>
 
               <h3 style={{ fontSize: '1.2rem', marginBottom: '6px', color: 'var(--text-main)' }}>
-                {lang === 'hi' ? scheme.titleHindi : scheme.title}
+                {scheme.title}
               </h3>
               <p style={{ fontSize: '0.78rem', color: 'var(--text-dim)', marginBottom: '14px' }}>
                 {scheme.minister}
@@ -187,10 +184,10 @@ export default function GovtSchemesHub({ lang }) {
               </p>
 
               {/* Quick Eligibility Bullet */}
-              <div style={{ background: 'rgba(0,0,0,0.2)', padding: '12px', borderRadius: '10px', marginBottom: '20px' }}>
+              <div style={{ background: '#edf8ee', padding: '12px', borderRadius: '10px', marginBottom: '20px' }}>
                 <p style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <UserCheck size={14} className="text-gradient" />
-                  {lang === 'hi' ? 'मुख्य पात्रता:' : 'Key Eligibility:'}
+                  Key Eligibility:
                 </p>
                 <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
                   {scheme.eligibility[0]}
@@ -206,7 +203,7 @@ export default function GovtSchemesHub({ lang }) {
                 style={{ flex: 1, padding: '10px', fontSize: '0.85rem', justifyContent: 'center' }}
               >
                 <FileText size={15} />
-                <span>{lang === 'hi' ? 'विवरण व दस्तावेज' : 'View Details'}</span>
+                <span>View Details</span>
               </button>
 
               <a
@@ -216,7 +213,7 @@ export default function GovtSchemesHub({ lang }) {
                 className="btn-primary"
                 style={{ padding: '10px 14px', fontSize: '0.85rem', textDecoration: 'none' }}
               >
-                <span>{lang === 'hi' ? 'आवेदन करें' : 'Apply'}</span>
+                <span>Apply</span>
                 <ExternalLink size={14} />
               </a>
             </div>
@@ -238,7 +235,7 @@ export default function GovtSchemesHub({ lang }) {
                   {activeModalScheme.category}
                 </span>
                 <h2 style={{ fontSize: '1.5rem', lineHeight: 1.2 }}>
-                  {lang === 'hi' ? activeModalScheme.titleHindi : activeModalScheme.title}
+                  {activeModalScheme.title}
                 </h2>
               </div>
               <button 
@@ -250,7 +247,7 @@ export default function GovtSchemesHub({ lang }) {
             </div>
 
             {/* Benefit Box */}
-            <div style={{ background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '16px', borderRadius: '12px', marginBottom: '20px' }}>
+            <div style={{ background: 'rgba(59, 190, 57, 0.12)', border: '1px solid rgba(11, 143, 77, 0.3)', padding: '16px', borderRadius: '12px', marginBottom: '20px' }}>
               <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#34d399', marginBottom: '4px' }}>
                 Benefit: {activeModalScheme.benefitAmount}
               </div>
@@ -263,11 +260,11 @@ export default function GovtSchemesHub({ lang }) {
             <div style={{ marginBottom: '24px' }}>
               <h4 style={{ fontSize: '1rem', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <FileText size={18} className="text-gradient" />
-                <span>{lang === 'hi' ? 'आवश्यक दस्तावेज (Required Documents):' : 'Required Documents Checklist:'}</span>
+                <span>Required Documents Checklist:</span>
               </h4>
               <ul style={{ listStyle: 'none', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '8px' }}>
                 {activeModalScheme.documents.map((doc, idx) => (
-                  <li key={idx} style={{ fontSize: '0.88rem', background: 'rgba(0,0,0,0.2)', padding: '8px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <li key={idx} style={{ fontSize: '0.88rem', background: '#edf8ee', padding: '8px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <CheckCircle2 size={15} style={{ color: '#34d399' }} />
                     <span>{doc}</span>
                   </li>
@@ -279,7 +276,7 @@ export default function GovtSchemesHub({ lang }) {
             <div style={{ marginBottom: '28px' }}>
               <h4 style={{ fontSize: '1rem', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <ChevronRight size={18} className="text-gradient" />
-                <span>{lang === 'hi' ? 'आवेदन प्रक्रिया (Step-by-Step Application):' : 'How to Apply Step-by-Step:'}</span>
+                <span>How to Apply Step-by-Step:</span>
               </h4>
               <ol style={{ paddingLeft: '20px', color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.7 }}>
                 {activeModalScheme.steps.map((step, idx) => (
@@ -290,10 +287,10 @@ export default function GovtSchemesHub({ lang }) {
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
               <button onClick={() => setActiveModalScheme(null)} className="btn-secondary">
-                {lang === 'hi' ? 'बंद करें' : 'Close'}
+                Close
               </button>
               <a href={activeModalScheme.applyUrl} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ textDecoration: 'none' }}>
-                <span>{lang === 'hi' ? 'आधिकारिक पोर्टल पर जाएं' : 'Open Official Govt Portal'}</span>
+                <span>Open Official Govt Portal</span>
                 <ExternalLink size={16} />
               </a>
             </div>
@@ -311,8 +308,8 @@ export default function GovtSchemesHub({ lang }) {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
               <h3 style={{ fontSize: '1.4rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Calculator size={22} style={{ color: '#fbbf24' }} />
-                <span>{lang === 'hi' ? 'किसान योजना पात्रता कैलकुलेटर' : 'Farmer Scheme Eligibility Calculator'}</span>
+                <Calculator size={22} style={{ color: '#4ade80' }} />
+                <span>Farmer Scheme Eligibility Calculator</span>
               </h3>
               <button onClick={() => setShowCalculator(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
                 <X size={22} />

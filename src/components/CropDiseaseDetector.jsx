@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CROP_DISEASES } from '../data/agriData';
 import { Upload, Sparkles, AlertTriangle, CheckCircle, Shield, Bug, Droplet, Zap, Printer, RefreshCw, Eye } from 'lucide-react';
 
-export default function CropDiseaseDetector({ lang }) {
+export default function CropDiseaseDetector() {
   const [selectedImage, setSelectedImage] = useState(CROP_DISEASES[0].sampleImage);
   const [activeDisease, setActiveDisease] = useState(CROP_DISEASES[0]);
   const [isScanning, setIsScanning] = useState(false);
@@ -16,7 +16,7 @@ export default function CropDiseaseDetector({ lang }) {
     setTimeout(() => {
       setActiveDisease(disease);
       setIsScanning(false);
-    }, 1500);
+    }, 1200);
   };
 
   const handleFileUpload = (e) => {
@@ -27,7 +27,6 @@ export default function CropDiseaseDetector({ lang }) {
       setCustomUploadName(file.name);
       setIsScanning(true);
 
-      // Match or select random disease diagnostic for custom image
       setTimeout(() => {
         const randomMatch = CROP_DISEASES[Math.floor(Math.random() * (CROP_DISEASES.length - 1))];
         setActiveDisease({
@@ -35,7 +34,7 @@ export default function CropDiseaseDetector({ lang }) {
           confidence: (88 + Math.random() * 10).toFixed(1)
         });
         setIsScanning(false);
-      }, 2000);
+      }, 1500);
     }
   };
 
@@ -44,31 +43,29 @@ export default function CropDiseaseDetector({ lang }) {
   };
 
   return (
-    <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '32px 24px' }}>
+    <div style={{ maxWidth: '100%', margin: '0 auto', padding: '24px 0' }}>
       {/* Header */}
-      <div style={{ marginBottom: '32px' }}>
+      <div style={{ marginBottom: '28px' }}>
         <div className="badge badge-success" style={{ marginBottom: '10px' }}>
           <Sparkles size={14} />
-          <span>{lang === 'hi' ? 'कंप्यूटर विज़न एआई' : 'Computer Vision AI Diagnostics'}</span>
+          <span>Computer Vision AI Diagnostics</span>
         </div>
         <h2 style={{ fontSize: '2rem', marginBottom: '8px' }}>
-          {lang === 'hi' ? 'फसल रोग पहचान एवं निदान' : 'Crop Disease Detection & Diagnosis'}
+          Crop Disease Detection & Diagnosis
         </h2>
         <p style={{ color: 'var(--text-muted)', fontSize: '1rem' }}>
-          {lang === 'hi'
-            ? 'अपनी पीड़ित फसल के पत्ते की फोटो अपलोड करें अथवा नीचे दिए गए नमूनों में से चयन करें।'
-            : 'Upload a clear leaf photo of your crop or pick from our sample leaf gallery to simulate real-time AI disease scanning.'}
+          Upload a clear leaf photo of your crop or select from our sample leaf gallery to perform real-time AI disease scanning.
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '28px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
         
         {/* Left Column: Upload & Scanner Box */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <div className="glass-card" style={{ padding: '24px', position: 'relative', overflow: 'hidden' }}>
+          <div className="glass-card no-hover" style={{ padding: '24px', position: 'relative', overflow: 'hidden' }}>
             <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Upload size={18} className="text-gradient" />
-              <span>{lang === 'hi' ? 'पत्ते की फोटो अपलोड करें' : 'Upload Leaf Image'}</span>
+              <span>Upload Leaf Image</span>
             </h3>
 
             {/* Dropzone Area */}
@@ -78,9 +75,9 @@ export default function CropDiseaseDetector({ lang }) {
               borderRadius: '16px',
               overflow: 'hidden',
               border: '2px dashed var(--border-color)',
-              background: 'rgba(0,0,0,0.2)',
+              background: 'rgba(14, 216, 58, 0.2)',
               cursor: 'pointer',
-              height: '320px'
+              height: '300px'
             }}>
               <input type="file" accept="image/*" onChange={handleFileUpload} style={{ display: 'none' }} />
 
@@ -120,17 +117,17 @@ export default function CropDiseaseDetector({ lang }) {
                   <>
                     <RefreshCw size={36} className="text-gradient" style={{ animation: 'spin 1.5s linear infinite' }} />
                     <p style={{ marginTop: '12px', fontWeight: 700, fontSize: '1.1rem' }}>
-                      {lang === 'hi' ? 'AI रोग स्कैनिंग जारी है...' : 'AI Analyzing Leaf Pathogens...'}
+                      AI Analyzing Leaf Pathogens...
                     </p>
                     <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', marginTop: '4px' }}>
-                      Checking 1,000+ plant disease features
+                      Scanning 1,000+ plant disease features
                     </p>
                   </>
                 ) : (
                   <div style={{ background: 'rgba(0,0,0,0.6)', padding: '12px 20px', borderRadius: '12px', backdropFilter: 'blur(8px)' }}>
                     <Upload size={24} style={{ marginBottom: '6px' }} />
                     <p style={{ fontWeight: 600, fontSize: '0.92rem' }}>
-                      {lang === 'hi' ? 'नया फोटो अपलोड करने के लिए क्लिक करें' : 'Click to Upload Custom Photo'}
+                      Click to Upload Custom Photo
                     </p>
                   </div>
                 )}
@@ -148,7 +145,7 @@ export default function CropDiseaseDetector({ lang }) {
           <div className="glass-card" style={{ padding: '20px' }}>
             <h4 style={{ fontSize: '0.95rem', marginBottom: '12px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}>
               <Eye size={16} />
-              <span>{lang === 'hi' ? 'परीक्षण हेतु नमूने चुनिए:' : 'Test with Sample Leaves:'}</span>
+              <span>Test with Sample Leaves:</span>
             </h4>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
               {CROP_DISEASES.map((item) => (
@@ -187,13 +184,8 @@ export default function CropDiseaseDetector({ lang }) {
                   {activeDisease.crop}
                 </span>
                 <h3 style={{ fontSize: '1.4rem', color: 'var(--text-main)', lineHeight: 1.2 }}>
-                  {lang === 'hi' ? activeDisease.hindiName : activeDisease.diseaseName}
+                  {activeDisease.diseaseName}
                 </h3>
-                {lang === 'hi' && (
-                  <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                    {activeDisease.diseaseName}
-                  </p>
-                )}
               </div>
 
               {/* Severity & Confidence */}
@@ -220,66 +212,70 @@ export default function CropDiseaseDetector({ lang }) {
             <div style={{ display: 'flex', gap: '8px', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px', marginBottom: '20px', overflowX: 'auto' }}>
               <button
                 onClick={() => setRemedyTab('organic')}
-                className="btn-secondary"
+                className="btn-secondary no-tab-hover"
                 style={{
                   padding: '6px 14px',
                   fontSize: '0.85rem',
                   borderRadius: '8px',
-                  background: remedyTab === 'organic' ? 'rgba(16, 185, 129, 0.2)' : 'transparent',
-                  color: remedyTab === 'organic' ? '#34d399' : 'var(--text-muted)',
-                  borderColor: remedyTab === 'organic' ? 'var(--accent-primary)' : 'transparent'
+                  background: '#4e705d',
+                  color: '#ffffff',
+                  borderColor: '#4e705d',
+                  cursor: 'pointer'
                 }}
               >
                 <Droplet size={14} />
-                <span>{lang === 'hi' ? 'जैविक उपचार' : 'Organic Remedies'}</span>
+                <span>Organic Remedies</span>
               </button>
 
               <button
                 onClick={() => setRemedyTab('chemical')}
-                className="btn-secondary"
+                className="btn-secondary no-tab-hover"
                 style={{
                   padding: '6px 14px',
                   fontSize: '0.85rem',
                   borderRadius: '8px',
-                  background: remedyTab === 'chemical' ? 'rgba(245, 158, 11, 0.2)' : 'transparent',
-                  color: remedyTab === 'chemical' ? '#fbbf24' : 'var(--text-muted)',
-                  borderColor: remedyTab === 'chemical' ? '#f59e0b' : 'transparent'
+                  background: '#4e705d',
+                  color: '#ffffff',
+                  borderColor: '#4e705d',
+                  cursor: 'pointer'
                 }}
               >
                 <Zap size={14} />
-                <span>{lang === 'hi' ? 'रासायनिक स्प्रे' : 'Chemical Spray'}</span>
+                <span>Chemical Spray</span>
               </button>
 
               <button
                 onClick={() => setRemedyTab('symptoms')}
-                className="btn-secondary"
+                className="btn-secondary no-tab-hover"
                 style={{
                   padding: '6px 14px',
                   fontSize: '0.85rem',
                   borderRadius: '8px',
-                  background: remedyTab === 'symptoms' ? 'rgba(59, 130, 246, 0.2)' : 'transparent',
-                  color: remedyTab === 'symptoms' ? '#60a5fa' : 'var(--text-muted)',
-                  borderColor: remedyTab === 'symptoms' ? '#3b82f6' : 'transparent'
+                  background: '#4e705d',
+                  color: '#ffffff',
+                  borderColor: '#4e705d',
+                  cursor: 'pointer'
                 }}
               >
                 <Bug size={14} />
-                <span>{lang === 'hi' ? 'लक्षण' : 'Symptoms'}</span>
+                <span>Symptoms</span>
               </button>
 
               <button
                 onClick={() => setRemedyTab('preventive')}
-                className="btn-secondary"
+                className="btn-secondary no-tab-hover"
                 style={{
                   padding: '6px 14px',
                   fontSize: '0.85rem',
                   borderRadius: '8px',
-                  background: remedyTab === 'preventive' ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
-                  color: remedyTab === 'preventive' ? 'var(--text-main)' : 'var(--text-muted)',
-                  borderColor: remedyTab === 'preventive' ? 'var(--text-muted)' : 'transparent'
+                  background: '#4e705d',
+                  color: '#ffffff',
+                  borderColor: '#4e705d',
+                  cursor: 'pointer'
                 }}
               >
                 <Shield size={14} />
-                <span>{lang === 'hi' ? 'रोकथाम' : 'Preventive Tips'}</span>
+                <span>Preventive Tips</span>
               </button>
             </div>
 
@@ -311,7 +307,7 @@ export default function CropDiseaseDetector({ lang }) {
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {activeDisease.symptoms.map((item, idx) => (
                     <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.92rem' }}>
-                      <Bug size={16} style={{ color: '#60a5fa', flexShrink: 0, marginTop: '3px' }} />
+                      <Bug size={16} style={{ color: '#34d399', flexShrink: 0, marginTop: '3px' }} />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -338,7 +334,7 @@ export default function CropDiseaseDetector({ lang }) {
 
               <button onClick={handlePrint} className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
                 <Printer size={15} />
-                <span>{lang === 'hi' ? 'रिपोर्ट प्रिंट करें' : 'Print Diagnostic Report'}</span>
+                <span>Print Diagnostic Report</span>
               </button>
             </div>
           </div>

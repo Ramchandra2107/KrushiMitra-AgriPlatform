@@ -1,101 +1,92 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header';
 import HeroBanner from './components/HeroBanner';
 import CropDiseaseDetector from './components/CropDiseaseDetector';
 import GovtSchemesHub from './components/GovtSchemesHub';
 import WeatherForecast from './components/WeatherForecast';
-import MandiTicker from './components/MandiTicker';
-import MandiPrices from './components/MandiPrices';
-
+import LeftFeatureDock from './components/LeftFeatureDock';
 import AgriBot from './components/AgriBot';
-import { Leaf, Heart, ShieldCheck, Stethoscope, CloudSun, Store } from 'lucide-react';
+import VoiceAssistant from './components/VoiceAssistant';
+import { Leaf } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('hero'); // 'hero', 'crop-detector', 'mandi', 'govt-schemes', 'weather'
-  const [theme, setTheme] = useState('green-plane');
-  const [lang, setLang] = useState('en');
+  const [activeTab, setActiveTab] = useState('hero');
+  const [botOpen, setBotOpen] = useState(false);
+  const [voiceOpen, setVoiceOpen] = useState(false);
 
-  // Update theme attribute on root HTML element
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      background: '#ffffff',
+      // color: '#123b29'
+    }}>
+
       {/* Header Bar */}
-      <Header 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab} 
-        theme={theme} 
-        setTheme={setTheme} 
-        lang={lang} 
-        setLang={setLang} 
-      />
+      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      {/* Live Mandi Prices Ticker Bar */}
-      <MandiTicker lang={lang} setActiveTab={setActiveTab} />
+      {/* Main Layout: Left Dock + Content */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '24px',
+        maxWidth: '1440px',
+        width: '100%',
+        margin: '0 auto',
+        padding: '24px 24px 0',
+        boxSizing: 'border-box',
+        flex: 1,
+        position: 'relative'
+      }}>
+        <LeftFeatureDock
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          onOpenBot={() => setBotOpen(true)}
+          onOpenVoice={() => setVoiceOpen(true)}
+        />
 
-      {/* Main Content Render */}
-      <main style={{ flex: 1 }}>
-        {activeTab === 'hero' && (
-          <HeroBanner setActiveTab={setActiveTab} lang={lang} />
-        )}
+        <main style={{
+          flex: 1,
+          minWidth: 0,
+          background: '#ffffff',
+          borderRadius: '22px',
+          border: '1px solid rgba(78, 112, 93, 0.12)',
+          boxShadow: '0 10px 30px rgba(31, 74, 57, 0.06)'
+        }}>
+          {activeTab === 'hero' && <HeroBanner setActiveTab={setActiveTab} />}
+          {activeTab === 'crop-detector' && <CropDiseaseDetector />}
+          {activeTab === 'govt-schemes' && <GovtSchemesHub />}
+          {activeTab === 'weather' && <WeatherForecast />}
+        </main>
+      </div>
 
-        {activeTab === 'crop-detector' && (
-          <CropDiseaseDetector lang={lang} />
-        )}
+      {/* KrushiBot AI Floating Widget */}
+      <AgriBot externalOpen={botOpen} setExternalOpen={setBotOpen} />
 
-        {activeTab === 'mandi' && (
-          <MandiPrices lang={lang} />
-        )}
-
-        {activeTab === 'govt-schemes' && (
-          <GovtSchemesHub lang={lang} />
-        )}
-
-        {activeTab === 'weather' && (
-          <WeatherForecast lang={lang} />
-        )}
-      </main>
-
-      {/* AI Assistant Floating Widget */}
-      <AgriBot lang={lang} />
+      {/* Voice Assistant Floating Widget */}
+      <VoiceAssistant externalOpen={voiceOpen} setExternalOpen={setVoiceOpen} />
 
       {/* Footer */}
       <footer style={{
         marginTop: '60px',
-        borderTop: '1px solid var(--border-color)',
-        background: 'var(--bg-glass)',
+        borderTop: '1px solid rgba(78, 112, 93, 0.25)',
+        background: '#ffffff',
         padding: '32px 24px 24px',
-        color: 'var(--text-muted)',
+        color: '#38634a',
         fontSize: '0.88rem'
       }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
-          
+
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Leaf size={20} className="text-gradient" />
-            <span style={{ fontWeight: 700, color: 'var(--text-main)' }}>AgriVision</span>
+            <Leaf size={20} style={{ color: '#3bbe39' }} />
+            <span style={{ fontWeight: 700, color: '#075b38' }}>KrushiMitra</span>
             <span>— AI Empowering Agricultural Growth</span>
           </div>
 
-          <div style={{ display: 'flex', gap: '16px' }}>
-            <button onClick={() => setActiveTab('crop-detector')} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
-              {lang === 'hi' ? 'फसल जांच' : 'Disease Detection'}
-            </button>
-            <button onClick={() => setActiveTab('mandi')} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
-              {lang === 'hi' ? 'मंडी भाव' : 'Mandi Rates'}
-            </button>
-            <button onClick={() => setActiveTab('govt-schemes')} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
-              {lang === 'hi' ? 'सरकारी योजनाएं' : 'Govt Schemes'}
-            </button>
-            <button onClick={() => setActiveTab('weather')} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
-              {lang === 'hi' ? 'मौसम सलाह' : 'Weather Advisory'}
-            </button>
-          </div>
-
-          <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
-            © 2026 AgriVision Platform. Designed for Farmers with ❤️
+          <div style={{ fontSize: '0.8rem', color: '#38634a' }}>
+            © 2026 KrushiMitra Platform. Designed for Farmers with ❤️
           </div>
         </div>
       </footer>

@@ -1,22 +1,23 @@
-import React from 'react';
-import { Leaf, Sun, Moon, Globe, ShieldCheck, CloudSun, Stethoscope, Sparkles, Store, Sprout } from 'lucide-react';
+import React, { useState } from 'react';
+import { Leaf, ShieldCheck, CloudSun, Stethoscope } from 'lucide-react';
 
-export default function Header({ activeTab, setActiveTab, theme, setTheme, lang, setLang }) {
-  const toggleTheme = () => {
-    if (theme === 'green-plane') setTheme('dark');
-    else if (theme === 'dark') setTheme('light');
-    else setTheme('green-plane');
-  };
+export default function Header({ activeTab, setActiveTab }) {
+  const [hoveredTab, setHoveredTab] = useState(null);
+
+  const tabs = [
+    { id: 'crop-detector', label: 'Disease Detector', icon: Stethoscope },
+    { id: 'govt-schemes', label: 'Govt Schemes', icon: ShieldCheck },
+    { id: 'weather', label: 'Weather Forecast', icon: CloudSun },
+  ];
 
   return (
     <header style={{
       position: 'sticky',
       top: 0,
       zIndex: 50,
-      background: 'var(--bg-glass)',
-      backdropFilter: 'blur(16px)',
-      WebkitBackdropFilter: 'blur(16px)',
-      borderBottom: '1px solid var(--border-color)',
+      background: 'linear-gradient(135deg, #064c31 0%, #087443 100%)',
+      borderBottom: '1px solid rgba(59, 190, 57, 0.38)',
+      boxShadow: '0 8px 24px rgba(1, 45, 27, 0.24)',
       padding: '12px 24px'
     }}>
       <div style={{
@@ -29,7 +30,7 @@ export default function Header({ activeTab, setActiveTab, theme, setTheme, lang,
         gap: '16px'
       }}>
         {/* Brand Logo */}
-        <div 
+        <div
           onClick={() => setActiveTab('hero')}
           style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
         >
@@ -37,139 +38,90 @@ export default function Header({ activeTab, setActiveTab, theme, setTheme, lang,
             width: '42px',
             height: '42px',
             borderRadius: '12px',
-            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+            background: 'linear-gradient(135deg, #3bbe39 0%, #9de59b 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 4px 14px rgba(16, 185, 129, 0.4)',
-            color: '#fff'
+            boxShadow: '0 4px 14px rgba(78, 112, 93, 0.18)',
+            color: '#064c31'
           }}>
             <Leaf size={24} />
           </div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '1.4rem', fontWeight: 800, letterSpacing: '-0.03em' }}>Agri</span>
-              <span style={{ fontSize: '1.4rem', fontWeight: 800 }} className="text-gradient">Vision</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <span style={{ fontSize: '1.4rem', fontWeight: 800, letterSpacing: '-0.03em', color: '#ffffff' }}>Krushi</span>
+              <span style={{ fontSize: '1.4rem', fontWeight: 800, color: '#9de59b' }}>Mitra</span>
             </div>
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '-4px', fontWeight: 500 }}>
+            <p style={{ fontSize: '0.72rem', color: '#b9e8c0', marginTop: '-4px', fontWeight: 600 }}>
               AI Agricultural Intelligence
             </p>
           </div>
         </div>
 
         {/* Navigation Tabs */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(0,0,0,0.15)', padding: '4px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
-          <button
-            onClick={() => setActiveTab('crop-detector')}
-            className={`btn-secondary ${activeTab === 'crop-detector' ? 'active' : ''}`}
-            style={{
-              borderRadius: '8px',
-              padding: '8px 14px',
-              fontSize: '0.88rem',
-              background: activeTab === 'crop-detector' ? 'var(--accent-primary)' : 'transparent',
-              color: activeTab === 'crop-detector' ? '#fff' : 'var(--text-muted)',
-              border: 'none'
-            }}
-          >
-            <Stethoscope size={16} />
-            <span>{lang === 'hi' ? 'फसल रोग जांच' : 'Disease Detector'}</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('mandi')}
-            className={`btn-secondary ${activeTab === 'mandi' ? 'active' : ''}`}
-            style={{
-              borderRadius: '8px',
-              padding: '8px 14px',
-              fontSize: '0.88rem',
-              background: activeTab === 'mandi' ? 'var(--accent-primary)' : 'transparent',
-              color: activeTab === 'mandi' ? '#fff' : 'var(--text-muted)',
-              border: 'none'
-            }}
-          >
-            <Store size={16} />
-            <span>{lang === 'hi' ? 'मंडी भाव' : 'Mandi Rates'}</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('govt-schemes')}
-            className={`btn-secondary ${activeTab === 'govt-schemes' ? 'active' : ''}`}
-            style={{
-              borderRadius: '8px',
-              padding: '8px 14px',
-              fontSize: '0.88rem',
-              background: activeTab === 'govt-schemes' ? 'var(--accent-primary)' : 'transparent',
-              color: activeTab === 'govt-schemes' ? '#fff' : 'var(--text-muted)',
-              border: 'none'
-            }}
-          >
-            <ShieldCheck size={16} />
-            <span>{lang === 'hi' ? 'सरकारी योजनाएं' : 'Govt Schemes'}</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('weather')}
-            className={`btn-secondary ${activeTab === 'weather' ? 'active' : ''}`}
-            style={{
-              borderRadius: '8px',
-              padding: '8px 14px',
-              fontSize: '0.88rem',
-              background: activeTab === 'weather' ? 'var(--accent-primary)' : 'transparent',
-              color: activeTab === 'weather' ? '#fff' : 'var(--text-muted)',
-              border: 'none'
-            }}
-          >
-            <CloudSun size={16} />
-            <span>{lang === 'hi' ? 'मौसम पूर्वानुमान' : 'Weather Forecast'}</span>
-          </button>
+        <nav style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          background: 'rgba(255, 255, 255, 0.92)',
+          padding: '5px',
+          borderRadius: '14px',
+          border: '1px solid rgba(78, 112, 93, 0.3)'
+        }}>
+          {tabs.map(({ id, label, icon: Icon }) => {
+            const isActive = activeTab === id;
+            const isHovered = hoveredTab === id;
+            return (
+              <button
+                key={id}
+                onClick={() => setActiveTab(id)}
+                onMouseEnter={() => setHoveredTab(id)}
+                onMouseLeave={() => setHoveredTab(null)}
+                style={{
+                  borderRadius: '10px',
+                  padding: '9px 16px',
+                  fontSize: '0.87rem',
+                  fontWeight: 700,
+                  background: isActive ? '#4e705d' : (isHovered ? '#35c637' : '#ffffff'),
+                  color: isActive ? '#ffffff' : (isHovered ? '#123b29' : '#4e705d'),
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transition: 'all 0.22s ease',
+                  boxShadow: isActive || isHovered ? '0 4px 14px rgba(78, 112, 93, 0.32)' : '0 1px 4px rgba(0,0,0,0.05)'
+                }}
+              >
+                <Icon size={15} />
+                <span>{label}</span>
+              </button>
+            );
+          })}
         </nav>
 
-        {/* Action Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          {/* Language Switcher */}
-          <button
-            onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
-            className="glass-pill"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '6px 12px',
-              cursor: 'pointer',
-              color: 'var(--text-main)',
-              fontSize: '0.82rem',
-              fontWeight: 600
-            }}
-            title="Switch Language"
-          >
-            <Globe size={15} className="text-gradient" />
-            <span>{lang === 'en' ? 'हिन्दी' : 'English'}</span>
-          </button>
-
-          {/* Theme Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="glass-pill"
-            style={{
-              padding: '6px 12px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              cursor: 'pointer',
-              color: 'var(--text-main)',
-              border: '1px solid var(--border-color)',
-              fontSize: '0.8rem',
-              fontWeight: 600
-            }}
-            title={`Current Theme: ${theme}. Click to switch theme.`}
-          >
-            {theme === 'green-plane' && <Sprout size={16} style={{ color: '#4ade80' }} />}
-            {theme === 'dark' && <Moon size={16} style={{ color: '#38bdf8' }} />}
-            {theme === 'light' && <Sun size={16} style={{ color: '#fbbf24' }} />}
-            <span style={{ textTransform: 'capitalize' }}>
-              {theme === 'green-plane' ? 'Green Plane' : theme}
-            </span>
-          </button>
+        {/* Status Pill */}
+        <div style={{
+          padding: '6px 14px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          color: '#4e705d',
+          background: 'rgba(78, 112, 93, 0.12)',
+          border: '1px solid rgba(78, 112, 93, 0.25)',
+          borderRadius: '9999px',
+          fontSize: '0.78rem',
+          fontWeight: 700
+        }}>
+          <span style={{
+            width: '7px',
+            height: '7px',
+            borderRadius: '50%',
+            background: '#4e705d',
+            display: 'inline-block',
+            boxShadow: '0 0 6px rgba(78, 112, 93, 0.7)'
+          }} />
+          AI Online
         </div>
       </div>
     </header>
